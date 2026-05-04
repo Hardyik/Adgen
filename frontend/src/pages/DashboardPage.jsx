@@ -3,6 +3,8 @@ import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 export default function DashboardPage() {
   const [stats, setStats] = useState([
     { label: "Total Campaigns", value: "0", change: "", icon: "fa-bullhorn", color: "blue" },
@@ -16,8 +18,8 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const statsRes = await axios.get("http://localhost:5000/api/campaign/stats");
-        const campaignsRes = await axios.get("http://localhost:5000/api/campaign");
+        const statsRes = await axios.get(`${API_URL}/campaign/stats`);
+        const campaignsRes = await axios.get(`${API_URL}/campaign`);
 
         setStats([
           { label: "Total Campaigns", value: statsRes.data.totalCampaigns.toString(), change: "+10%", icon: "fa-bullhorn", color: "blue" },

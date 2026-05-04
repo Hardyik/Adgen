@@ -6,6 +6,7 @@ import User from "../models/user.model.js";
 const client = new OAuth2Client();
 
 export const signup = async (req, res) => {
+  console.log("📝 Signup attempt for:", req.body.email);
   try {
     const { name, email, password } = req.body;
 

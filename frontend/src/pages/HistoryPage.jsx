@@ -3,6 +3,8 @@ import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 export default function HistoryPage() {
   const [campaigns, setCampaigns] = useState([]);
   const [filteredCampaigns, setFilteredCampaigns] = useState([]);
@@ -14,7 +16,7 @@ export default function HistoryPage() {
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/campaign");
+        const res = await axios.get(`${API_URL}/campaign`);
         setCampaigns(res.data);
       } catch (err) {
         console.error("Error fetching campaigns:", err);
@@ -50,7 +52,7 @@ export default function HistoryPage() {
     if (!window.confirm("Are you sure you want to delete this campaign?")) return;
     
     try {
-      await axios.delete(`http://localhost:5000/api/campaign/${id}`);
+      await axios.delete(`${API_URL}/campaign/${id}`);
       setCampaigns(prev => prev.filter(c => c._id !== id));
       alert("Campaign deleted successfully!");
     } catch (err) {

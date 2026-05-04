@@ -10,6 +10,8 @@ import { createPortal } from "react-dom";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 const lightingOptions = [
   { label: "None", value: "none", Icon: Ban },
   { label: "Backlight", value: "backlight", Icon: Sun },
@@ -242,7 +244,7 @@ export default function CreatePage() {
     }, 500);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/image/generate", {
+      const response = await axios.post(`${API_URL}/image/generate`, {
         prompt,
         productName,
         companyName,

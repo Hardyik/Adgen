@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 const AuthContext = createContext(undefined);
 
 export const AuthProvider = ({ children }) => {
@@ -17,8 +19,9 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
+    console.log("🚀 Frontend login attempt:", `${API_URL}/auth/login`, { email });
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const res = await axios.post(`${API_URL}/auth/login`, { email, password });
       const { token, user } = res.data;
       setToken(token);
       setUser(user);
@@ -32,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   const googleLogin = async (credential) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/google", { credential });
+      const res = await axios.post(`${API_URL}/auth/google`, { credential });
       const { token, user } = res.data;
       setToken(token);
       setUser(user);
@@ -45,8 +48,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signup = async (name, email, password) => {
+    console.log("🚀 Frontend signup attempt:", `${API_URL}/auth/signup`, { name, email });
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", { name, email, password });
+      const res = await axios.post(`${API_URL}/auth/signup`, { name, email, password });
       const { token, user } = res.data;
       setToken(token);
       setUser(user);

@@ -2,6 +2,8 @@ import Sidebar from "../components/Sidebar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 export default function AdminPage() {
   const [users, setUsers] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
@@ -17,9 +19,9 @@ export default function AdminPage() {
     const fetchAdminData = async () => {
       try {
         const [usersRes, statsRes, campaignsRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/auth/users"),
-          axios.get("http://localhost:5000/api/campaign/stats"),
-          axios.get("http://localhost:5000/api/campaign")
+          axios.get(`${API_URL}/auth/users`),
+          axios.get(`${API_URL}/campaign/stats`),
+          axios.get(`${API_URL}/campaign`)
         ]);
 
         setUsers(usersRes.data);
